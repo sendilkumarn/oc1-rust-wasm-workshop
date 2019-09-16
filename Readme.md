@@ -4,8 +4,8 @@ This is a Rust 🦀 and WebAssembly 🕸 workshop.
 
 ## Suggested Prerequisites
 
-Rust - beginner to interemediate level - Want to learn? >> [Rust Programming Language Book](https://doc.rust-lang.org/book/).
-JavaScript - understand the basics.
+* Rust - beginner to interemediate level - Want to learn? >> [Rust Programming Language Book](https://doc.rust-lang.org/book/).
+* JavaScript - understand the basics.
 
 ## Getting Started
 
