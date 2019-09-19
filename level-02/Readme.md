@@ -17,6 +17,9 @@ The Rust side and the JavaScript side.
 We will remove the existing feature
 
 ```toml
+// Cargo.toml
+[dependencies.web-sys]
+version = "0.3.22"
 features = [
     'console'
 ]
@@ -25,6 +28,10 @@ features = [
 and replace it with the following:
 
 ```toml
+//Cargo.toml
+
+[dependencies.web-sys]
+version = "0.3.22"
 features = [
   'CanvasRenderingContext2d',
   'CssStyleDeclaration',
@@ -61,15 +68,20 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen(start)]
 pub fn start() -> Result<(), JsValue> {
+    // List of colors that we will use. Feel free to add your own favorite hex codes here.
     let colors = vec!["#F4908E", "#F2F097", "#88B0DC", "#F7B5D1", "#53C4AF", "#FDE38C"];
-
+    
+    // Calling the window object from the global
     let window = web_sys::window().expect("should have a window in this context");
+    // Getting the document object from the Window.
     let document = window.document().expect("window should have a document");
     
+    // Create the Canvas element.
     let canvas = document
         .create_element("canvas")?
         .dyn_into::<web_sys::HtmlCanvasElement>()?;
 
+    // Append it to the document's body. Simple HTML 101.
     document.body().unwrap().append_child(&canvas)?;
 
     canvas.set_width(640);
@@ -84,6 +96,7 @@ pub fn start() -> Result<(), JsValue> {
     let context = Rc::new(context);
     let pressed = Rc::new(Cell::new(false));
 
+    // Event handlers callback.
     { mouse_down(&context, &pressed, &canvas); }
     { mouse_move(&context, &pressed, &canvas); }
     { mouse_up(&context, &pressed, &canvas); }
@@ -169,7 +182,7 @@ Replace the contents of `static/index.html` with the following:
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Rust + Webpack aaa!</title>
+    <title>My Rust + Webpack - some canvas adventure!</title>
     <style>
         .color {
             display: inline-block;
@@ -192,7 +205,7 @@ Replace the contents of `static/index.html` with the following:
 We can produce our WebAssembly binary and the JavaScript glue code with the following command:
 
 ```bash
-$ npm run serve
+$ npm run start
 ```
 
 ## Reflections
@@ -202,5 +215,5 @@ $ npm run serve
 
 ## Exercises
 
-* Learn more about `web-sys` and `js-sys`.
+* Learn more about [web-sys](https://crates.io/crates/web-sys) and [js-sys](https://crates.io/crates/js-sys).
 
