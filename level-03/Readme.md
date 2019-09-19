@@ -37,7 +37,7 @@ Replace the contents of `js/index.js`.
 const rust = import('../pkg/index.js');
 
 rust.then(module => {
-    console.log(module.parse('#some markdown content')); 
+    console.log(module.parse('# some markdown content')); 
 });
 ```
 
