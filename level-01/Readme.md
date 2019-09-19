@@ -37,7 +37,21 @@ pub fn add(a: usize, b: usize) -> usize {
 }
 ```
 
-## 04 - wasm-pack
+## 04 - Add the dependencies
+
+Add the wasm-bindgen dependency and make the library as a dynamic library. 
+
+```toml
+// Cargo.toml
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen="0.2.50"
+```
+
+## 05 - wasm-pack
 
 While we could compile this to a WebAssembly binary using cargo, this won't give us the JavaScript glue code we need. 
 For that we could use the `wasm-bindgen` cli tool that reads the WebAssembly binary and produces JavaScript glue code that we can use to call the WebAssembly code. 
@@ -49,7 +63,7 @@ To install `wasm-pack` simply run the following:
 $ cargo install wasm-pack
 ```
 
-## 05 - Let us build it
+## 06 - Let us build it
 
 We can produce our WebAssembly binary and the JavaScript glue code with the following command:
 
@@ -61,7 +75,7 @@ We're running the command with the option `--target web` which will allow us to 
 
 This will run cargo and the `wasm-bindgen` CLI tool to create the WebAssembly binary and the JavaScript glue code and place it inside of `pkg` folder. wasm-pack also produces TypeScript definitions for us as well if we choose to use TypeScript.
 
-## 05 - Let us run it
+## 07 - Let us run it
 
 We can then hook it all up by creating an `index.html` file that simply references the generated JavaScript glue code. We'll need to call the generated `init` function and then we can all the `add` function with no issue:
 
@@ -78,7 +92,12 @@ We can then hook it all up by creating an `index.html` file that simply referenc
 
 If we try to open the `index.html` file in a browser, we'll find an error in the console. This is because we're importing a module at a relative path which will effectively be a cross-origin request which isn't allowed.
 
-We'll need to serve our example from a webserver so that all requests go to the same domain (i.e., localhost). Feel free to use your favorite simple http server. I use Brian Anderson's [`basic-http-server`](https://github.com/brson/basic-http-server).
+We'll need to serve our example from a webserver so that all requests go to the same domain (i.e., localhost). Feel free to use your favorite simple http server. 
+
+Some options are:
+* Brian Anderson's [`basic-http-server`](https://github.com/brson/basic-http-server).
+* If you have Python 2 - `python -m SimpleHTTPServer` 
+* Else with Python 3 - `python3 -m http.server`
 
 If we access the `index.html` file through the web server, we'll finally see our message printed out to the console.
 
