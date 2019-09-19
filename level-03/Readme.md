@@ -12,14 +12,13 @@ npm init rust-webpack markdown-rust
 ## 03 - Add the dependencies
 
 ```toml
-[dependencies]
-wasm-bindgen = "0.2.45"
 comrak = "0.6"
 ```
 
 ## 04 - Lets write some Rust
 
 ```rust
+// src/lib.rs
 use comrak::{markdown_to_html, ComrakOptions};
 use wasm_bindgen::prelude::*;
 
@@ -31,7 +30,10 @@ pub fn parse(input: &str) -> String {
 
 ## 05 - Some JavaScript into the mix
 
+Replace the contents of `js/index.js`.
+
 ```javascript
+// js/index.js
 const rust = import('../pkg/index.js');
 
 rust.then(module => {
@@ -44,10 +46,10 @@ rust.then(module => {
 We can produce our WebAssembly binary and the JavaScript glue code with the following command:
 
 ```bash
-$ npm run serve
+$ npm run start
 ```
 
-## Performance + Bundle size 
+## Interested to explore further...
 
 https://dev.to/sendilkumarn/increase-rust-and-webassembly-performance-382h
 
@@ -61,6 +63,6 @@ https://dev.to/sendilkumarn/reduce-your-webassembly-binaries-72-from-56kb-to-26k
 
 * Go ahead and publish your libraries.
 
-## Bonus level
+## Bonus level 🦄
 * Check [this](https://github.com/sendilkumarn/rust-wasm-workshop/tree/master/going-further) for game-boy with Rust and WebAssembly
 
